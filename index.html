@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Valley High School</title>
+<style>
+
+
+/* Basic Reset */
+body { margin:0; font-family: Arial, sans-serif; background:#f0f2f5; color:#333; scroll-behavior:smooth; }
+a { text-decoration:none; color:inherit; }
+
+/* Header */
+header { display:flex; justify-content:space-between; align-items:center; padding:15px 30px; background:#4CAF50; color:white; position:sticky; top:0; z-index:100;}
+header h1 { margin:0; font-size:24px; }
+nav ul { display:flex; gap:20px; list-style:none; margin:0; padding:0; }
+nav ul li a { color:white; font-weight:bold; padding:5px 10px; border-radius:6px; transition:0.3s; }
+nav ul li a.active, nav ul li a:hover { background:white; color:#4CAF50; }
+
+/* Hero Section */
+#hero {
+  position:relative;
+  text-align:center;
+  color:white;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:url('school-hero.jpg') center/cover no-repeat;
+  overflow:hidden;
+}
+#hero::before {
+  content:"";
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:1;
+}
+#hero .hero-overlay {
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  padding:20px;
+}
+
+/* Hero Animations */
+@keyframes fadeInUp {
+  0% { opacity:0; transform: translateY(30px); }
+  100% { opacity:1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  0% { opacity:0; }
+  100% { opacity:1; }
+}
+
+#hero h2 {
+  font-size:48px;
+  margin:0;
+  animation: fadeInUp 1s ease forwards;
+}
+#hero p {
+  font-size:20px;
+  margin:0;
+  animation: fadeInUp 1s ease 0.3s forwards;
+}
+
+/* Hero Image Adjustment */
+.hero-image { margin:20px 0; width:100%; max-width:1200px; }
+.hero-image img {
+  width:100%;         
+  max-width:none;      
+  height:auto;         
+  max-height:80vh;     
+  object-fit:cover;    
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  transition:0.3s;
+  opacity:1;             
+  transform:translateY(0); 
+  animation: fadeInUp 1s ease 0.6s forwards;
+}
+.hero-image img:hover { transform:scale(1.03); }
+
+/* Hero Buttons */
+.hero-buttons { display:flex; gap:15px; flex-wrap:wrap; justify-content:center; }
+.hero-buttons a {
+  padding:12px 25px;
+  background:#2196F3;
+  color:white;
+  border-radius:8px;
+  transition:0.3s;
+  opacity:0;
+  transform:translateY(20px);
+  animation: fadeInUp 1s ease 0.9s forwards;
+}
+.hero-buttons a:hover { background:#0b7dda; transform:scale(1.05); }
+
+/* Sections */
+section { padding:60px 20px; max-width:1200px; margin:auto; }
+section h3 { text-align:center; margin-bottom:40px; font-size:28px; color:#4CAF50; }
+
+/* Facilities */
+.facility-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+.facility-card { background:white; padding:25px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); transition:0.3s; text-align:center; }
+.facility-card:hover { transform:translateY(-5px); box-shadow:0 8px 25px rgba(0,0,0,0.2); }
+.facility-card h4 { margin-bottom:10px; color:#333; }
+.facility-card p { font-size:15px; color:#555; }
+
+/* Gallery */
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:15px; }
+.gallery-grid img { width:100%; border-radius:12px; transition:0.3s; cursor:pointer; opacity:0; animation: fadeInUp 1s ease forwards; }
+.gallery-grid img:hover { transform:scale(1.05); box-shadow:0 6px 20px rgba(0,0,0,0.2); }
+
+/* Testimonials */
+#testimonials { background:#e8f5e9; padding:60px 20px; border-radius:12px; text-align:center; }
+.testimonial-card { max-width:600px; margin:20px auto; font-style:italic; background:white; padding:25px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+
+/* Contact */
+#contact form { max-width:600px; margin:auto; display:flex; flex-direction:column; gap:15px; }
+#contact input, #contact textarea { padding:12px 15px; border-radius:8px; border:1px solid #ccc; font-size:16px; }
+#contact input:focus, #contact textarea:focus { outline:none; border-color:#4CAF50; box-shadow:0 0 5px #4CAF50; }
+#contact button { padding:12px; background:#4CAF50; color:white; font-size:16px; border:none; border-radius:8px; cursor:pointer; transition:0.3s; }
+#contact button:hover { background:#388E3C; transform:scale(1.05); }
+
+/* Footer */
+footer { text-align:center; padding:15px; background:#4CAF50; color:white; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Green Valley High School</h1>
+  <nav>
+    <ul>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faculty.html">Faculty</a></li>
+      <li><a href="students.html">Students</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="login.html">Login</a></li> <!-- ✅ নতুন Login অপশন -->
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<!-- Hero Section -->
+<section id="hero">
+  <div class="hero-overlay">
+    <h2>Welcome to Green Vallby High School</h2>
+    <p>A place where knowledge meets creativity and excellence.</p>
+
+    <div class="hero-image">
+      <img src="school-building.png" alt="School Building">
+    </div>
+
+    <div class="hero-buttons">
+      <a href="students.html" class="btn">View Students</a>
+      <a href="faculty.html" class="btn">View Faculty</a>
+      <a href="about.html" class="btn">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- Facilities -->
+<section id="facilities">
+  <h3>Our Facilities</h3>
+  <div class="facility-grid">
+    <div class="facility-card">
+      <h4>Modern Classrooms</h4>
+      <p>Smart boards, projectors, ergonomic seating.</p>
+    </div>
+    <div class="facility-card">
+      <h4>Computer Labs</h4>
+      <p>State-of-the-art labs for coding and robotics.</p>
+    </div>
+    <div class="facility-card">
+      <h4>Science Labs</h4>
+      <p>Physics, chemistry, biology labs for experiments.</p>
+    </div>
+    <div class="facility-card">
+      <h4>Library</h4>
+      <p>Extensive books, journals, and digital resources.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+  <h3>School Gallery</h3>
+  <div class="gallery-grid">
+    <img src="C:\Users\HP\Desktop\WEBSITE\gallery11.jpg" alt="Event 1">
+   <!--   -->
+    <img src="C:\Users\HP\Desktop\WEBSITE\gallery2.jpg" alt="Event 3">
+    <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\1.jpg " alt="Event 4">
+    <img src=" C:\Users\HP\Desktop\WEBSITE\Pic_project\2.jpg" alt="Event 5">
+    <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\3.jpg " alt="Event 6">
+    <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\5.jpg " alt="Event 7">
+    <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\6.jpg " alt="Event 8">
+     <img src=" C:\Users\HP\Desktop\WEBSITE\Pic_project\7.jpg" alt="Event 9">
+    <img src=" C:\Users\HP\Desktop\WEBSITE\Pic_project\8.jpg" alt="Event 10">
+     <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\9.jpg " alt="Event 11">
+    <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\10.jpg " alt="Event 12">
+     <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\11.jpg " alt="Event 13">
+    <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\12.jpg " alt="Event 14">
+      <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\13.jpg " alt="Event 15">
+      <!--  <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\14.jpg " alt="Event 16">  -->
+
+
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <h3>Testimonials</h3>
+  <div class="testimonial-card">
+    <p>"Amazing teachers and environment!"</p>
+    <span>- Student</span>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <h3> COMPLAIN BOX  </h3>
+    <form action="https://api.web3forms.com/submit" method="POST"class="contact-left">
+            <div class="contact-left-title">
+                <h2></h2>
+                <hr>
+            </div>
+            <input type="hidden" name="access_key" value="45344d3d-4775-41c7-8d8b-8e530cdbd12a">
+            <input type="text"name="name"placeholder="Your name"class="contact-input" required>
+            <input type="email"name="email"placeholder="your email"class="contact-input"required>
+            <textarea name="message"placeholder="your message"class="contact-input"required></textarea>
+            <button type="submit">Submit<img src="assets/arrow_icon.png" alt=""></button>
+        </form>
+</section>
+
+
+
+
+<footer>
+  <p>&copy; 2025 Green Valley High School</p>
+</footer>
+
+</body>
+</html>

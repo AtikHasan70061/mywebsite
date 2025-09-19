@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Student Login - Green Valley High School</title>
+<style>
+  :root{--green:#2e7d32;--blue:#1565c0;--card:#fff;}
+  body{font-family:Inter,Segoe UI,Arial; background:linear-gradient(135deg,#e8f6f3,#ffffff); margin:0; padding:30px;}
+  header{background:var(--green); color:#fff; padding:18px 20px; border-radius:10px; text-align:center; margin-bottom:20px;}
+  .wrap{max-width:920px; margin:0 auto; display:grid; grid-template-columns:1fr 420px; gap:24px; align-items:start;}
+  .infoCard, .formCard{background:var(--card); padding:20px; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.08);}
+  h2{margin:0 0 12px 0; color:#143642;}
+  .muted{color:#555; font-size:14px;}
+  label{display:block; margin:12px 0 6px; font-weight:600; color:#333;}
+  select,input{width:100%; padding:10px 12px; border-radius:8px; border:1px solid #d0d7db; font-size:15px; box-sizing:border-box;}
+  .row{display:flex; gap:12px;}
+  .row .col{flex:1;}
+  .btn{display:inline-block; padding:10px 16px; border-radius:8px; border:none; cursor:pointer; font-weight:700;}
+  .btn.primary{background:var(--green); color:#fff;}
+  .btn.secondary{background:#eee; color:#222;}
+  .actions{margin-top:14px; display:flex; gap:10px; align-items:center;}
+  .link{color:var(--blue); text-decoration:underline; cursor:pointer;}
+  .small{font-size:13px;color:#666;}
+  .message{margin-top:12px; font-weight:700;}
+  .danger{color:#c62828;}
+  .success{color:#2e7d32;}
+
+  /* Forgot modal simple */
+  .modal{position:fixed; inset:0; display:none; background:rgba(0,0,0,0.45); align-items:center; justify-content:center;}
+  .modal .panel{width:520px; background:white; padding:18px; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.25);}
+  .modal.show{display:flex;}
+  .small-muted{font-size:13px;color:#666;margin-top:6px;}
+
+  footer{margin-top:20px;text-align:center;color:#666;font-size:13px;}
+  @media(max-width:900px){ .wrap{grid-template-columns:1fr; } .modal .panel{width:92%;} }
+</style>
+</head>
+<body>
+<header>
+  <h1>Green Valley High School</h1>
+  <div class="muted">Student Login Portal</div>
+</header>
+
+<div class="wrap">
+  <!-- Left: Info / Instructions -->
+  <div class="infoCard">
+    <h2>Important</h2>
+    <p class="muted">Login with <strong>Class, Section, Roll</strong> and <strong>Password</strong>.</p>
+    <ul class="small-muted">
+      <li>Default password for all students: <strong>12345</strong>.</li>
+      <li>After first login you can change your password from your profile page.</li>
+      <li>If you forget your password, use the <em>Forgot Password</em> flow below to reset it (you only need class/section/roll to verify).</li>
+      <li>All data is stored locally in your browser (localStorage). It's just a demo/test setup.</li>
+    </ul>
+    <hr style="margin:14px 0"/>
+    <h3>Quick test</h3>
+    <p class="small-muted">Try: Class = <code>10</code>, Section = <code>A</code>, Roll = <code>1</code>, Password = <code>12345</code></p>
+    <p class="small-muted">There are 1500 generated students (1..10 classes × A/B/C × roll 1..50).</p>
+  </div>
+
+  <!-- Right: Login Form -->
+  <div class="formCard">
+    <h2>Student Login</h2>
+
+    <label for="classSelect">Class</label>
+    <select id="classSelect">
+      <option value="">Select Class</option>
+      <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+      <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select>
+
+    <div class="row" style="margin-top:6px;">
+      <div class="col">
+        <label for="sectionSelect">Section</label>
+        <select id="sectionSelect">
+          <option value="">Select Section</option>
+          <option>A</option><option>B</option><option>C</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="rollInput">Roll</label>
+        <input id="rollInput" type="number" min="1" max="50" placeholder="e.g. 1">
+      </div>
+    </div>
+
+    <label for="passwordInput">Password</label>
+    <input id="passwordInput" type="password" placeholder="Enter Password">
+
+    <div class="actions">
+      <button class="btn primary" onclick="doLogin()">Login</button>
+      <button class="btn secondary" onclick="openForgot()">Forgot Password</button>
+      <div style="flex:1"></div>
+    </div>
+
+    <div id="loginMessage" class="message"></div>
+    <div style="margin-top:12px;" class="small">
+      New student? Default password is <strong>12345</strong>. You can change it after login.
+    </div>
+  </div>
+</div>
+
+<!-- Forgot Modal -->
+<div id="forgotModal" class="modal" role="dialog" aria-hidden="true">
+  <div class="panel" role="document">
+    <h3>Forgot / Reset Password</h3>
+    <p class="small-muted">Provide Class, Section & Roll to verify your account and set a new password.</p>
+
+    <label>Class</label>
+    <select id="fClass"><option value="">Select</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select>
+
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <select id="fSection"><option value="">Select</option><option>A</option><option>B</option><option>C</option></select>
+      <input id="fRoll" type="number" min="1" max="50" placeholder="Roll">
+    </div>
+
+    <div id="forgotStep1" style="margin-top:12px;">
+      <button class="btn primary" onclick="verifyForgot()">Verify</button>
+      <button class="btn secondary" onclick="closeForgot()">Cancel</button>
+    </div>
+
+    <div id="forgotStep2" style="margin-top:12px; display:none;">
+      <p class="small-muted">Student found: <span id="foundName"></span></p>
+      <label>New Password</label>
+      <input id="newPass" type="password" placeholder="Enter new password">
+      <div style="margin-top:10px;">
+        <button class="btn primary" onclick="resetPassword()">Set New Password</button>
+        <button class="btn secondary" onclick="closeForgot()">Close</button>
+      </div>
+    </div>
+
+    <div id="forgotMsg" class="message"></div>
+  </div>
+</div>
+
+<footer style="max-width:920px;margin:20px auto;color:#555;">
+  <div style="display:flex;justify-content:space-between;flex-wrap:wrap;">
+    <div>© 2025 Green Valley High School</div>
+    <div>Data stored locally for demo purposes</div>
+  </div>
+</footer>
+
+<script>
+/* ========== utility: initialize 1500 students if not present ========== */
+function initialSeed(){
+  if(localStorage.getItem('studentsData')) return;
+  const students = [];
+  const classes = [1,2,3,4,5,6,7,8,9,10];
+  const sections = ['A','B','C'];
+  classes.forEach(cls=>{
+    sections.forEach(sec=>{
+      for(let r=1;r<=50;r++){
+        // build marks for 2025 sem1 by default
+        const marksObj = {};
+        const subs = (cls<=5) ? ["Math","English","Bangla","Science","ICT","Arts","Sports"] : ["Math","English","Bangla","Physics","Chemistry","Biology","ICT","History","Geography","Economics","Arts","Sports","Religion","Social Science"];
+        subs.forEach(s => marksObj[s] = Math.floor(Math.random()*41)+60); // 60-100
+        students.push({
+          name:`Student_${cls}${sec}${String(r).padStart(2,'0')}`,
+          class:String(cls),
+          section:sec,
+          roll:String(r),
+          id:`C${cls}${sec}${String(r).padStart(3,'0')}`,
+          marks: { "2025": { "1": marksObj } }, // default marks
+          presentDays: Math.floor(Math.random()*11)+110,
+          password: "12345",
+          activities: ["No activities recorded"]
+        });
+      }
+    });
+  });
+  localStorage.setItem('studentsData', JSON.stringify(students));
+}
+initialSeed();
+
+/* ========== login logic ========== */
+function findStudent(cls, sec, roll){
+  const list = JSON.parse(localStorage.getItem('studentsData')||"[]");
+  return list.find(s => s.class==String(cls) && s.section==String(sec) && s.roll==String(roll));
+}
+
+function doLogin(){
+  const cls = document.getElementById('classSelect').value;
+  const sec = document.getElementById('sectionSelect').value;
+  const roll = document.getElementById('rollInput').value && String(parseInt(document.getElementById('rollInput').value));
+  const pass = document.getElementById('passwordInput').value || "";
+
+  const msg = document.getElementById('loginMessage');
+  msg.textContent = ""; msg.className="message";
+
+  if(!cls || !sec || !roll){
+    msg.textContent = "Fill Class, Section and Roll.";
+    msg.classList.add('danger'); return;
+  }
+  const stu = findStudent(cls,sec,roll);
+  if(!stu){ msg.textContent = "No student found with given details."; msg.classList.add('danger'); return; }
+
+  if(stu.password !== pass){
+    msg.textContent = "Invalid password."; msg.classList.add('danger'); return;
+  }
+
+  // success -> save session and redirect to profile page
+  sessionStorage.setItem('loggedStudentClass', cls);
+  sessionStorage.setItem('loggedStudentSection', sec);
+  sessionStorage.setItem('loggedStudentRoll', roll);
+  // small session flag
+  sessionStorage.setItem('isStudentLogged', '1');
+  msg.textContent = "Login successful. Redirecting...";
+  msg.classList.add('success');
+  setTimeout(()=> window.location.href = 'studentprofile.html', 700);
+}
+
+/* ========== Forgot / Reset ========== */
+function openForgot(){ document.getElementById('forgotModal').classList.add('show'); document.getElementById('forgotMsg').textContent=""; document.getElementById('forgotStep2').style.display='none'; }
+function closeForgot(){ document.getElementById('forgotModal').classList.remove('show'); document.getElementById('forgotMsg').textContent=""; }
+
+function verifyForgot(){
+  const cls = document.getElementById('fClass').value;
+  const sec = document.getElementById('fSection').value;
+  const roll = document.getElementById('fRoll').value && String(parseInt(document.getElementById('fRoll').value));
+  const msg = document.getElementById('forgotMsg'); msg.textContent='';
+  if(!cls||!sec||!roll){ msg.textContent="Provide class, section and roll."; msg.className='message danger'; return; }
+  const stu = findStudent(cls,sec,roll);
+  if(!stu){ msg.textContent="Student not found."; msg.className='message danger'; return; }
+  document.getElementById('foundName').textContent = `${stu.name} (ID: ${stu.id})`;
+  document.getElementById('forgotStep2').style.display='block';
+  document.getElementById('forgotStep1').style.display='none';
+  msg.textContent = '';
+}
+
+function resetPassword(){
+  const cls = document.getElementById('fClass').value;
+  const sec = document.getElementById('fSection').value;
+  const roll = document.getElementById('fRoll').value && String(parseInt(document.getElementById('fRoll').value));
+  const newPass = document.getElementById('newPass').value || '';
+  const msg = document.getElementById('forgotMsg'); msg.textContent='';
+
+  if(newPass.length < 4){ msg.textContent = "Password should be at least 4 characters."; msg.className='message danger'; return; }
+
+  const list = JSON.parse(localStorage.getItem('studentsData')||"[]");
+  const idx = list.findIndex(s => s.class==String(cls) && s.section==String(sec) && s.roll==String(roll));
+  if(idx === -1){ msg.textContent = "Student not found (unexpected)."; msg.className='message danger'; return; }
+
+  list[idx].password = newPass;
+  localStorage.setItem('studentsData', JSON.stringify(list));
+  msg.textContent = "Password updated successfully.";
+  msg.className = 'message success';
+  setTimeout(()=>{ closeForgot(); }, 900);
+}
+</script>
+</body>
+</html>

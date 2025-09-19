@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery - My School/College</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1 class="logo">My School/College</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="courses.html#courses">Courses</a></li>
+                <li><a href="gallery.html#gallery" class="active">Gallery</a></li>
+                <li><a href="contact.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="gallery" id="gallery">
+    <div class="container">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+            <img src="images/photo1.jpg" alt="Photo 1" class="lightbox">
+            <img src="images/photo2.jpg" alt="Photo 2" class="lightbox">
+            <img src="images/photo3.jpg" alt="Photo 3" class="lightbox">
+            <img src="images/photo4.jpg" alt="Photo 4" class="lightbox">
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Overlay -->
+<div id="lightbox-overlay">
+    <span id="close">&times;</span>
+    <img id="lightbox-img" src="">
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 My School/College. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

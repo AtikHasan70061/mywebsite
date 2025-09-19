@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Green Valley High School</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    line-height: 1.8;
+    scroll-behavior: smooth;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #4CAF50;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+nav ul li a {
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+nav ul li a.active,
+nav ul li a:hover {
+    background: white;
+    color: #4CAF50;
+}
+
+/* About Section */
+section#about {
+    max-width: 1200px;
+    margin: auto;
+    padding: 60px 20px;
+}
+section#about h2 {
+    text-align: center;
+    color: #4CAF50;
+    font-size: 36px;
+    margin-bottom: 50px;
+}
+.about-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    margin-bottom: 50px;
+}
+.about-block {
+    background: #ffffff;
+    padding: 35px 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+    transition: transform 0.3s;
+}
+.about-block:hover {
+    transform: translateY(-5px);
+}
+.about-block h3 {
+    color: #2196F3;
+    font-size: 28px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+.about-block h3::before {
+    content: "📌";
+    margin-right: 10px;
+}
+.about-block p {
+    margin-bottom: 18px;
+    font-size: 16px;
+}
+.about-block ul {
+    margin-left: 25px;
+    margin-bottom: 20px;
+    list-style: none;
+}
+.about-block ul li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+.about-block ul li::before {
+    content: "✔️";
+    position: absolute;
+    left: 0;
+}
+
+/* Chairman & Principal */
+#leaders {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+.leader-card {
+    text-align: center;
+    transition: transform 0.5s;
+}
+.leader-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #4CAF50;
+    transition: transform 0.5s;
+}
+.leader-card:hover img {
+    transform: scale(1.1) rotate(-5deg);
+}
+.leader-card h4 {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #4CAF50;
+}
+.leader-card p {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #4CAF50;
+    color: white;
+    margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Green Valley High School</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="faculty.html">Faculty</a></li>
+            <li><a href="students.html">Students</a></li>
+            <li><a href="index.html#gallery">Gallery</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="about">
+    <h2>About Green Valley High School</h2>
+
+    <!-- School Image Top -->
+    <div class="about-image">
+        <img src="school-building.png" alt="School Building">
+    </div>
+
+  <!-- Chairman & Principal -->
+    <section id="leaders">
+        <div class="leader-card">
+            <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\17.png" alt="Chairman Photo">
+            <h4>Chairman</h4>
+            <p>Mr. John Doe</p>
+        </div>
+        <div class="leader-card">
+            <img src="C:\Users\HP\Desktop\WEBSITE\Pic_project\18.jpg" alt="Principal Photo">
+            <h4>Principal</h4>
+            <p>Ms. Jane Smith</p>
+        </div>
+    </section>
+
+
+    <!-- History & Foundation -->
+    <div class="about-block">
+        <h3>History & Foundation</h3>
+        <p>Green Valley High School was founded in 1995 by visionary educators and philanthropists.</p>
+        <p>It began with just 50 students and 5 teachers in a modest building.</p>
+        <p>By 2000, the school grew to 300 students and 20 teachers.</p>
+        <p>In 2005, a larger campus with modern classrooms and labs was established.</p>
+        <p>The school has consistently emphasized academic excellence and holistic education.</p>
+        <p>Every year, cultural programs and community events celebrate the school's anniversary.</p>
+        <p>The founders' vision continues to guide the school's development.</p>
+        <p>The institution is renowned for producing successful graduates in various fields.</p>
+        <p>Green Valley High School remains committed to nurturing creativity and responsibility.</p>
+        <p>The school has evolved into a leading educational establishment in the region.</p>
+    </div>
+
+    <!-- Mission & Vision -->
+    <div class="about-block">
+        <h3>Mission & Vision</h3>
+        <p><strong>Mission:</strong> To create an inclusive, stimulating environment enabling students to reach their potential.</p>
+        <p>Foster creativity, critical thinking, and a lifelong love for learning.</p>
+        <p>Develop responsible citizens with strong moral values.</p>
+        <p><strong>Vision:</strong> To be recognized as a leading institution for academic excellence and social contribution.</p>
+        <p>Empower students with knowledge, skills, and values for global success.</p>
+        <p>Promote innovation, leadership, and ethical education.</p>
+        <p>Encourage students to explore and excel in diverse fields.</p>
+        <p>Alumni are expected to contribute positively to society.</p>
+        <p>Sustainability, civic responsibility, and personal growth are emphasized.</p>
+        <p>All school programs align with the mission and vision statements.</p>
+    </div>
+
+    <!-- Academic Achievements -->
+    <div class="about-block">
+        <h3>Academic Achievements</h3>
+        <p>The school consistently ranks top in regional and national exams.</p>
+        <ul>
+            <li>100% board exam pass rate since 2005.</li>
+            <li>Regional winners in mathematics, science, and literature competitions.</li>
+            <li>National debate champions multiple years consecutively.</li>
+            <li>Top positions in inter-school essay and project competitions.</li>
+            <li>Scholarships awarded for academic excellence.</li>
+            <li>High university placement rates for graduates.</li>
+            <li>Recognition by the Ministry of Education for innovative teaching.</li>
+            <li>Participation and awards in national academic olympiads.</li>
+            <li>Student-led research projects presented at conferences.</li>
+            <li>Excellence in creative writing, coding, and STEM initiatives.</li>
+        </ul>
+    </div>
+
+    <!-- Clubs & Student Council -->
+    <div class="about-block">
+        <h3>Clubs & Student Council</h3>
+        <p>The school encourages leadership through clubs and councils.</p>
+        <ul>
+            <li>Science & Technology Club</li>
+            <li>Art & Culture Club</li>
+            <li>Sports Club</li>
+            <li>Debate & Public Speaking Club</li>
+            <li>Environment & Social Service Club</li>
+            <li>Robotics & Coding Club</li>
+            <li>Photography & Media Club</li>
+            <li>Literature & Writing Club</li>
+            <li>Music & Drama Club</li>
+            <li>Community Outreach Club</li>
+        </ul>
+        <p>Student Council members are elected annually and coordinate events.</p>
+        <p>They mentor younger students and plan academic, cultural, and sports activities.</p>
+        <p>The council fosters teamwork, leadership, and responsibility among students.</p>
+        <p>Clubs and council activities complement classroom education.</p>
+        <p>Leadership skills gained prepare students for future challenges.</p>
+    </div>
+
+    <!-- Sports & Extracurricular -->
+    <div class="about-block">
+        <h3>Sports & Extracurricular Activities</h3>
+        <p>Physical education and extracurriculars are integral for holistic development.</p>
+        <ul>
+            <li>Football team – regional champions multiple years.</li>
+            <li>Basketball, cricket, volleyball tournaments at state level.</li>
+            <li>Annual athletics meet – track and field events.</li>
+            <li>Debate competitions – national recognition.</li>
+            <li>Cultural programs: drama, music, and dance.</li>
+            <li>Science fairs and coding competitions.</li>
+            <li>Environmental campaigns and social service projects.</li>
+            <li>Art exhibitions showcasing creativity.</li>
+            <li>Robotics and STEM competitions with other schools.</li>
+            <li>Photography and media club events annually.</li>
+        </ul>
+        <p>Students participate actively, balancing academics and hobbies.</p>
+        <p>Extracurriculars build confidence, teamwork, and leadership.</p>
+        <p>Sports and arts programs foster discipline and creativity.</p>
+        <p>Annual competitions encourage healthy rivalry and excellence.</p>
+        <p>Opportunities are provided for both beginners and advanced students.</p>
+    </div>
+
+    <!-- Faculty & Staff -->
+    <div class="about-block">
+        <h3>Faculty & Staff</h3>
+        <p>Experienced and qualified teachers form the backbone of the school.</p>
+        <p>Regular professional development enhances teaching quality.</p>
+        <p>Staff includes teachers, counselors, coaches, and administrators.</p>
+        <p>Faculty mentor students both academically and personally.</p>
+        <p>Teachers actively guide research, clubs, and extracurricular activities.</p>
+        <p>Coaches train students in sports, wellness, and teamwork.</p>
+        <p>Staff participate in curriculum planning and student evaluation.</p>
+        <p>Continuous training ensures up-to-date pedagogical methods.</p>
+        <p>Faculty involvement enriches student experiences beyond classroom.</p>
+        <p>Collaboration between staff, students, and parents fosters community.</p>
+    </div>
+
+  
+</section>
+
+<footer>
+    <p>&copy; 2025 Green Valley High School</p>
+</footer>
+
+</body>
+</html>

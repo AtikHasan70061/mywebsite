@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faculty - Green Valley High School</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f0f2f5; margin:0; padding:0;}
+header { text-align:center; padding:15px; background:#4CAF50; color:white;}
+nav ul { display:flex; justify-content:center; list-style:none; padding:0; margin:0; gap:20px;}
+nav ul li a { color:white; text-decoration:none; font-weight:bold;}
+nav ul li a.active { text-decoration:underline;}
+#faculty-page { padding:20px; }
+#faculty-page h2 { margin-bottom:20px; text-align:center; }
+.faculty-list { display:flex; flex-direction:column; gap:15px; max-width:1000px; margin:auto; }
+.faculty-item { background:white; padding:15px; border-radius:8px; box-shadow:0 3px 10px rgba(0,0,0,0.1); display:flex; gap:15px; align-items:flex-start; font-size:14px; }
+.faculty-item img { width:80px; height:80px; border-radius:50%; object-fit:cover; }
+.faculty-info { display:flex; flex-direction:column; gap:3px; }
+.faculty-info p { margin:0; padding:2px 5px; background:#e0f7fa; border-radius:4px; }
+.faculty-info a { font-weight:bold; color:#1a73e8; cursor:pointer; text-decoration:underline; }
+
+#facultyModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1000;}
+#facultyModal .modal-content { background:white; padding:25px; border-radius:12px; width:400px; max-height:90%; overflow-y:auto; text-align:left; position:relative; }
+#facultyModal .close-btn { position:absolute; top:10px; right:15px; font-size:20px; font-weight:bold; cursor:pointer; color:#333; }
+#facultyModal img { width:140px; height:140px; border-radius:50%; display:block; margin:0 auto 15px auto; }
+#facultyModal p { margin:8px 0; font-size:14px; background:#e0f7fa; padding:6px 10px; border-radius:6px; }
+#facultyModal h3 { text-align:center; margin-bottom:10px; }
+</style>
+</head>
+<body>
+<header>
+<h1>Green Valley High School</h1>
+<nav>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="faculty.html" class="active">Faculty</a></li>
+<li><a href="students.html">Students</a></li>
+<li><a href="exam_controller.html">Exam Controller</a></li> <!-- ✅ New Link -->
+<li><a href="admission_controller.html">Admission Controller</a></li>
+
+</ul>
+</nav>
+</header>
+
+<section id="faculty-page">
+<h2>Our Faculty Members</h2>
+<div class="faculty-list" id="facultyList"></div>
+</section>
+
+<!-- Modal Popup -->
+<div id="facultyModal">
+<div class="modal-content">
+<span class="close-btn" onclick="closeModal()">&times;</span>
+<img id="modalImg" src="" alt="">
+<h3 id="modalName"></h3>
+<p id="modalSSC"></p>
+<p id="modalHSC"></p>
+<p id="modalHonours"></p>
+<p id="modalMasters"></p>
+<p id="modalUniversity"></p>
+<p id="modalBlood"></p>
+<p id="modalContact"></p>
+<p id="modalLocation"></p>
+<p id="modalExperience"></p>
+<p id="modalProject"></p>
+</div>
+</div>
+
+<footer style="text-align:center; padding:10px;">&copy; 2025 Green Valley High School</footer>
+
+<script>
+const firstNames = ["Md.", "Tanvir", "Rakib", "Shahana", "Farhana", "Abdul", "Sohana", "Karim", "Arif", "Fatema"];
+const lastNames = ["Hasan","Akter","Chowdhury","Alam","Rahman","Haque","Khan","Siddique","Majumder","Islam"];
+const subjects = ["Mathematics","Physics","Chemistry","English","Bangla","Biology","ICT","History","Geography","Economics"];
+const schools = ["Viqarunnisa Noon School","Holy Cross Girls' School","Rajshahi Collegiate School","Chittagong Collegiate School","Comilla Zilla School","Dhaka Collegiate School"];
+const colleges = ["Dhaka College","Eden College","Jagannath College","Rajshahi College","Chittagong College","Comilla College"];
+const universities = ["University of Dhaka","University of Rajshahi","University of Chittagong","BUET","Jahangirnagar University","North South University"];
+const bloodGroups = ['A+','A-','B+','B-','O+','O-','AB+','AB-'];
+const cities = ["Dhaka","Chittagong","Rajshahi","Comilla","Sylhet","Barishal","Khulna","Mymensingh"];
+const experiences = ["5 years teaching","7 years research","10 years experience","3 years lab assistant","8 years teaching","6 years project work"];
+const projects = ["AI Project","Robotics Lab","Math Olympiad","Science Fair","Coding Bootcamp","History Research"];
+
+const facultyList = document.getElementById('facultyList');
+const facultyMembers = [];
+
+// Generate 100 faculty
+for(let i=1; i<=100; i++){
+  const name = `${firstNames[i%10]} ${lastNames[i%10]}`
+  const subject = subjects[i%10];
+  const sscSchool = schools[i%6];
+  const hscCollege = colleges[i%6];
+  const honoursSubject = subject;
+  const mastersSubject = subject;
+  const university = universities[i%6];
+  const bloodGroup = bloodGroups[i%8];
+  const contact = `0171110${(1000+i).toString().padStart(4,'0')}`;
+  const location = cities[i%8];
+  const experience = experiences[i%6];
+  const project = projects[i%6];
+   
+  const img = `faculty${i%10+1}.jpg`;
+
+  const member = {name,subject,sscSchool,hscCollege,honoursSubject,mastersSubject,university,bloodGroup,contact,location,experience,project,img};
+  facultyMembers.push(member);
+
+  const div = document.createElement('div');
+  div.className = 'faculty-item';
+  div.innerHTML = `
+    <img src="${img}" alt="${name}">
+    <div class="faculty-info">
+      <p><a>${name}</a></p>
+      <p><strong>Subject:</strong> ${subject}</p>
+      <p><strong>Blood Group:</strong> ${bloodGroup}</p>
+      <p><strong>Contact:</strong> ${contact}</p>
+    </div>
+  `;
+  div.querySelector('a').onclick = () => openModal(member);
+  facultyList.appendChild(div);
+}
+
+// Modal functions
+const modal = document.getElementById('facultyModal');
+function openModal(member){
+  document.getElementById('modalImg').src = member.img;
+  document.getElementById('modalName').textContent = member.name;
+  document.getElementById('modalSSC').textContent = "SSC School: " + member.sscSchool;
+  document.getElementById('modalHSC').textContent = "HSC College: " + member.hscCollege;
+  document.getElementById('modalHonours').textContent = "Honours: " + member.honoursSubject;
+  document.getElementById('modalMasters').textContent = "Masters: " + member.mastersSubject;
+  document.getElementById('modalUniversity').textContent = "University: " + member.university;
+  document.getElementById('modalBlood').textContent = "Blood Group: " + member.bloodGroup;
+  document.getElementById('modalContact').textContent = "Contact: " + member.contact;
+  document.getElementById('modalLocation').textContent = "Location: " + member.location;
+  document.getElementById('modalExperience').textContent = "Experience: " + member.experience;
+  document.getElementById('modalProject').textContent = "Project: " + member.project;
+  modal.style.display = 'flex';
+}
+
+function closeModal(){
+  modal.style.display = 'none';
+}
+</script>
+</body>
+</html>

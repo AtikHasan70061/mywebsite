@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admission Controller - Green Valley High School</title>
+<style>
+/* Global */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
+  margin:0;
+  padding:0;
+}
+
+/* Header */
+header {
+  text-align:center;
+  padding:25px;
+  background:linear-gradient(135deg, #43a047, #2e7d32);
+  color:white;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+header h1 { margin:0; font-size:28px; }
+header h2 { margin:5px 0 0 0; font-size:18px; font-weight:normal; }
+
+/* Container */
+.container {
+  max-width:700px;
+  margin:40px auto;
+  background:white;
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.15);
+  transition:transform 0.3s ease;
+}
+.container:hover {
+  transform:translateY(-4px);
+}
+
+/* Login Card */
+.login-card {
+  max-width:400px;
+  margin:80px auto;
+  background:white;
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.15);
+  text-align:center;
+}
+.login-card h2 { margin-bottom:20px; color:#2e7d32; }
+.login-card label { display:block; margin-top:12px; font-weight:600; color:#333; text-align:left; }
+.login-card input {
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  margin-top:6px;
+}
+.login-card input:focus {
+  border-color:#2e7d32;
+  outline:none;
+  box-shadow:0 0 6px rgba(46,125,50,0.3);
+}
+.login-card button {
+  margin-top:20px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(135deg,#2196f3,#0b7dda);
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.login-card button:hover {
+  background:linear-gradient(135deg,#0b7dda,#1976d2);
+}
+
+/* Form */
+h2 { text-align:center; margin-bottom:20px; color:#2e7d32; }
+label { display:block; margin-top:12px; font-weight:600; color:#333; }
+input, select {
+  width:100%; 
+  padding:12px 14px; 
+  margin-top:6px; 
+  font-size:16px; 
+  border-radius:8px; 
+  border:1px solid #ccc;
+  transition:border 0.2s;
+}
+input:focus, select:focus {
+  outline:none;
+  border:1px solid #2e7d32;
+  box-shadow:0 0 6px rgba(46,125,50,0.3);
+}
+
+/* Button */
+button {
+  width:100%;
+  padding:14px;
+  margin-top:25px;
+  font-size:16px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(135deg, #2196f3, #0b7dda);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover {
+  background:linear-gradient(135deg, #0b7dda, #1976d2);
+  transform:scale(1.02);
+}
+
+/* Messages */
+.success, .error {
+  padding:12px;
+  border-radius:8px;
+  margin-top:15px;
+  text-align:center;
+  font-weight:bold;
+}
+.success { background:#d4edda; color:#155724; }
+.error { background:#f8d7da; color:#721c24; }
+
+/* Footer */
+footer {
+  text-align:center;
+  padding:15px;
+  margin-top:30px;
+  color:#555;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Green Valley High School</h1>
+  <h2>Admission Controller Panel</h2>
+</header>
+
+<!-- Login Interface -->
+<div id="loginPage" class="login-card">
+  <h2>🔐 Admin Login</h2>
+  <label>Username:</label>
+  <input type="text" id="loginUser" placeholder="Enter Username">
+  <label>Password:</label>
+  <input type="password" id="loginPass" placeholder="Enter Password">
+  <button onclick="login()">Login</button>
+  <div id="loginMsg"></div>
+</div>
+
+<!-- Admission Controller Panel -->
+<div id="mainPage" class="container" style="display:none;">
+  <h2>Add / Update Student</h2>
+
+  <label>Name:</label>
+  <input type="text" id="nameInput" placeholder="Enter Student Name">
+
+  <label>Class:</label>
+  <select id="classSelect">
+    <option value="1">Class 1</option>
+    <option value="2">Class 2</option>
+    <option value="3">Class 3</option>
+    <option value="4">Class 4</option>
+    <option value="5">Class 5</option>
+    <option value="6">Class 6</option>
+    <option value="7">Class 7</option>
+    <option value="8">Class 8</option>
+    <option value="9">Class 9</option>
+    <option value="10">Class 10</option>
+  </select>
+
+  <label>Section:</label>
+  <select id="sectionSelect">
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+  </select>
+
+  <label>Roll:</label>
+  <input type="number" id="rollInput" min="1" placeholder="Enter Roll Number">
+
+  <label>Student ID:</label>
+  <input type="text" id="idInput" placeholder="e.g. C1A01">
+
+  <label>Blood Group:</label>
+  <select id="bloodInput">
+    <option value="">Select Blood Group</option>
+    <option value="A+">A+</option>
+    <option value="A-">A-</option>
+    <option value="B+">B+</option>
+    <option value="B-">B-</option>
+    <option value="O+">O+</option>
+    <option value="O-">O-</option>
+    <option value="AB+">AB+</option>
+    <option value="AB-">AB-</option>
+  </select>
+
+  <label>Contact:</label>
+  <input type="text" id="contactInput" placeholder="Enter Contact Number">
+
+  <label>Address:</label>
+  <input type="text" id="addressInput" placeholder="Enter Address">
+
+  <label>Parent Name:</label>
+  <input type="text" id="parentNameInput" placeholder="Enter Parent Name">
+
+  <label>Parent Contact:</label>
+  <input type="text" id="parentContactInput" placeholder="Enter Parent Contact">
+
+  <button onclick="addStudent()">➕ Add / Update Student</button>
+  <div id="message"></div>
+  <br>
+  <button style="background:#f44336;" onclick="logout()">🚪 Logout</button>
+</div>
+
+<footer>
+  &copy; 2025 Green Valley High School
+</footer>
+
+<script>
+// ---------- LOGIN ----------
+function login(){
+  const user = document.getElementById("loginUser").value.trim();
+  const pass = document.getElementById("loginPass").value.trim();
+
+  if(user==="admin" && pass==="12345"){
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("mainPage").style.display="block";
+  }else{
+    document.getElementById("loginMsg").innerHTML=`<div class="error">❌ Invalid Username or Password</div>`;
+  }
+}
+
+function logout(){
+  document.getElementById("mainPage").style.display="none";
+  document.getElementById("loginPage").style.display="block";
+  document.getElementById("loginUser").value="";
+  document.getElementById("loginPass").value="";
+}
+
+// ---------- STUDENT STORAGE ----------
+
+// Subject generator
+function getSubjects(cls){
+  if(cls<=5){
+    return ["Math","English","Bangla","Science","ICT","Arts","Sports"];
+  }else{
+    return ["Math","English","Bangla","Physics","Chemistry","Biology","ICT","History","Geography","Economics","Arts","Sports","Religion","Social Science"];
+  }
+}
+
+// Load students
+let students = JSON.parse(localStorage.getItem("studentsData")) || [];
+
+// Add student
+function addStudent(){
+  const name = document.getElementById("nameInput").value.trim();
+  const cls = parseInt(document.getElementById("classSelect").value);
+  const sec = document.getElementById("sectionSelect").value;
+  const roll = parseInt(document.getElementById("rollInput").value);
+  const id = document.getElementById("idInput").value.trim();
+  const blood = document.getElementById("bloodInput").value;
+  const contact = document.getElementById("contactInput").value.trim();
+  const address = document.getElementById("addressInput").value.trim();
+  const parentName = document.getElementById("parentNameInput").value.trim();
+  const parentContact = document.getElementById("parentContactInput").value.trim();
+
+  if(!name || !cls || !sec || !roll || !id){
+    document.getElementById("message").innerHTML = `<div class="error">⚠️ Name, Class, Section, Roll & ID are required!</div>`;
+    return;
+  }
+
+  const subjects = getSubjects(cls);
+  const marksObj = {};
+  subjects.forEach(sub=> marksObj[sub]=0);
+
+  const newStudent = {
+    name,
+    class:cls,
+    section:sec,
+    roll,
+    id,
+    bloodGroup: blood,
+    contact: contact,
+    address: address,
+    parentName: parentName,
+    parentContact: parentContact,
+    marks:{"2025":{"1":marksObj}}, 
+    presentDays:0,
+    img: "default.jpg"
+  };
+
+  const index = students.findIndex(s=> s.class==cls && s.section==sec && s.roll==roll);
+  if(index>=0){
+    students[index] = newStudent;
+  }else{
+    students.push(newStudent);
+  }
+
+  localStorage.setItem("studentsData", JSON.stringify(students));
+  document.getElementById("message").innerHTML = `<div class="success">✅ Student saved successfully! (Roll ${roll}, Class ${cls}${sec})</div>`;
+}
+</script>
+
+</body>
+</html>

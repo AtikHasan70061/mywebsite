@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple Shop — Products</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">Simple<span>Shop</span></a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="products.html" class="active">Products</a>
+        <a href="cart.html">Cart <span id="cart-count">0</span></a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 class="page-title">Products</h2>
+
+    <!-- Mood Theme Selector -->
+    <div class="mood-theme">
+      <label>Theme: 
+        <select id="theme-selector">
+          <option value="morning">Morning</option>
+          <option value="evening">Evening</option>
+          <option value="night">Night</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="products-grid" class="products-grid"></div>
+
+    <!-- Recommendations -->
+    <h3>Recommended for you</h3>
+    <div id="recommendations" class="products-grid"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© SimpleShop — University Project</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    window.PRODUCTS = [
+      { id: 'p1', title: 'Smart Watch', price: 2500, desc: 'Lightweight smart watch', img: 'images/product1.svg' },
+      { id: 'p2', title: 'Headphones', price: 1800, desc: 'Over-ear comfort', img: 'images/product2.svg' },
+      { id: 'p3', title: 'Sunglasses', price: 900, desc: 'UV protection', img: 'images/product3.svg' },
+      { id: 'p4', title: 'Bluetooth Speaker', price: 2200, desc: 'Portable sound', img: 'images/product4.svg' },
+      { id: 'p5', title: 'Backpack', price: 1500, desc: 'Durable & stylish', img: 'images/product5.svg' },
+      { id: 'p6', title: 'Laptop Stand', price: 1200, desc: 'Ergonomic stand', img: 'images/product6.svg' },
+      { id: 'p7', title: 'Gaming Mouse', price: 1300, desc: 'High precision', img: 'images/product7.svg' },
+      { id: 'p8', title: 'Notebook', price: 300, desc: '200 pages', img: 'images/product8.svg' },
+      { id: 'p9', title: 'Water Bottle', price: 450, desc: 'Eco-friendly', img: 'images/product9.svg' }
+    ];
+  </script>
+</body>
+</html>

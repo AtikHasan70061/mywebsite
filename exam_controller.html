@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Controller - Green Valley High School</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f0f2f5; margin:0; padding:0;}
+header { text-align:center; padding:15px; background:#4CAF50; color:white;}
+.container { max-width:800px; margin:30px auto; background:white; padding:25px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.15);}
+h2 { text-align:center; margin-bottom:20px; }
+label { display:block; margin-top:10px; font-weight:bold;}
+select, input[type="number"], input[type="text"], input[type="password"], button { width:100%; padding:8px 12px; margin-top:5px; font-size:16px; border-radius:6px; border:1px solid #ccc;}
+button { background:#2196F3; color:white; border:none; margin-top:20px; cursor:pointer;}
+button:hover { background:#0b7dda;}
+.subject-inputs { margin-top:20px;}
+.subject-inputs h3 { margin-bottom:10px; }
+.subject-row { display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+.subject-row label { flex:1; margin:0;}
+.subject-row input { flex:1;}
+.success { background:#d4edda; color:#155724; padding:10px; border-radius:6px; margin-top:15px; text-align:center; font-weight:bold;}
+.error { background:#f8d7da; color:#721c24; padding:10px; border-radius:6px; margin-top:15px; text-align:center; font-weight:bold;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Green Valley High School</h1>
+  <h2>Exam Controller Panel</h2>
+</header>
+
+<div class="container">
+
+  <!-- LOGIN SECTION -->
+  <div id="loginDiv">
+    <h2>Login to Access Exam Controller</h2>
+    <label>Username:</label>
+    <input type="text" id="username">
+    <label>Password:</label>
+    <input type="password" id="password">
+    <button onclick="login()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
+
+  <!-- CONTROLLER SECTION -->
+  <div id="controllerDiv" style="display:none;">
+    <h2>Input / Update Student Result</h2>
+
+    <label for="yearSelect">Select Year:</label>
+    <select id="yearSelect"></select>
+
+    <label for="semesterSelect">Select Semester:</label>
+    <select id="semesterSelect">
+      <option value="1">1st Semester</option>
+      <option value="2">2nd Semester</option>
+    </select>
+
+    <label for="classSelect">Class:</label>
+    <select id="classSelect">
+      <option value="1">Class 1</option>
+      <option value="2">Class 2</option>
+      <option value="3">Class 3</option>
+      <option value="4">Class 4</option>
+      <option value="5">Class 5</option>
+      <option value="6">Class 6</option>
+      <option value="7">Class 7</option>
+      <option value="8">Class 8</option>
+      <option value="9">Class 9</option>
+      <option value="10">Class 10</option>
+    </select>
+
+    <label for="sectionSelect">Section:</label>
+    <select id="sectionSelect">
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+    </select>
+
+    <label for="rollInput">Roll:</label>
+    <input type="number" id="rollInput" min="1" placeholder="Enter Roll Number">
+
+    <div class="subject-inputs" id="subjectInputs"></div>
+
+    <button onclick="saveResult()">Save Result</button>
+    <div id="message"></div>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+</div>
+
+<script>
+// LOGIN / AUTH
+const USER = "admin";
+const PASS = "1234";
+
+function login(){
+  const u = document.getElementById("username").value;
+  const p = document.getElementById("password").value;
+  if(u===USER && p===PASS){
+    sessionStorage.setItem("loggedIn", "true");
+    document.getElementById("loginDiv").style.display="none";
+    document.getElementById("controllerDiv").style.display="block";
+  }else{
+    document.getElementById("loginMsg").textContent = "Invalid credentials!";
+    document.getElementById("loginMsg").style.color="red";
+  }
+}
+
+function checkLogin(){
+  if(sessionStorage.getItem("loggedIn") !== "true"){
+    document.getElementById("loginDiv").style.display="block";
+    document.getElementById("controllerDiv").style.display="none";
+  }
+}
+
+function logout(){
+  sessionStorage.removeItem("loggedIn");
+  location.reload();
+}
+
+checkLogin(); // run on page load
+
+// Populate year dropdown
+const yearSelect=document.getElementById("yearSelect");
+for(let y=2022;y<=2025;y++){
+  const opt=document.createElement("option");
+  opt.value=y; opt.textContent=y;
+  yearSelect.appendChild(opt);
+}
+
+// STUDENT DATA LOGIC
+function getSubjects(cls){
+  if(cls<=5){
+    return ["Math","English","Bangla","Science","ICT","Arts","Sports"];
+  }else{
+    return ["Math","English","Bangla","Physics","Chemistry","Biology","ICT","History","Geography","Economics","Arts","Sports","Religion","Social Science"];
+  }
+}
+
+// Initialize students if not exist
+if(!localStorage.getItem("studentsData")){
+  const classes = [1,2,3,4,5,6,7,8,9,10];
+  const sections = ['A','B','C'];
+  const students = [];
+  classes.forEach(cls=>{
+    sections.forEach(sec=>{
+      for(let i=1;i<=50;i++){
+        const marksObj = {};
+        getSubjects(cls).forEach(sub=> marksObj[sub]=Math.floor(Math.random()*41)+60);
+        students.push({
+          name:`Student_${cls}${sec}${i}`,
+          class:cls,
+          section:sec,
+          roll:i,
+          id:`C${cls}${sec}${i.toString().padStart(2,'0')}`,
+          marks:{"2025":{"1":marksObj}},
+          presentDays:Math.floor(Math.random()*11)+110
+        });
+      }
+    });
+  });
+  localStorage.setItem("studentsData", JSON.stringify(students));
+}
+
+let students = JSON.parse(localStorage.getItem("studentsData"));
+
+// Generate subject inputs dynamically
+function generateSubjects(){
+  const cls = parseInt(document.getElementById("classSelect").value);
+  const year = parseInt(document.getElementById("yearSelect").value);
+  // Calculate correct class at that year
+  let classAtYear = cls-(2025-year);
+  if(classAtYear<1) classAtYear=1;
+
+  const subjects = getSubjects(classAtYear);
+  const div = document.getElementById("subjectInputs");
+  div.innerHTML = `<h3>Enter Marks (0-100)</h3>`;
+  subjects.forEach(sub=>{
+    div.innerHTML += `
+      <div class="subject-row">
+        <label>${sub}</label>
+        <input type="number" id="sub_${sub}" min="0" max="100" value="0">
+      </div>
+    `;
+  });
+}
+
+// Update subjects when class or year changes
+document.getElementById("classSelect").addEventListener("change", generateSubjects);
+document.getElementById("yearSelect").addEventListener("change", generateSubjects);
+generateSubjects(); // initial load
+
+// Save result function
+function saveResult(){
+  const cls = parseInt(document.getElementById("classSelect").value);
+  const sec = document.getElementById("sectionSelect").value;
+  const roll = parseInt(document.getElementById("rollInput").value);
+  const year = parseInt(document.getElementById("yearSelect").value);
+  const sem = parseInt(document.getElementById("semesterSelect").value);
+
+  if(year==2025 && sem==2){
+    document.getElementById("message").innerHTML=`<div class="error">Future semester result cannot be saved!</div>`;
+    return;
+  }
+
+  const student = students.find(s=>s.class==cls && s.section==sec && s.roll==roll);
+  if(!student){
+    document.getElementById("message").innerHTML=`<div class="error">Student not found!</div>`; 
+    return; 
+  }
+
+  let classAtYear = cls-(2025-year);
+  if(classAtYear<1) classAtYear=1;
+
+  const subjects = getSubjects(classAtYear);
+  const marksObj = {};
+  let valid = true;
+  subjects.forEach(sub=>{
+    const mark = parseInt(document.getElementById(`sub_${sub}`).value);
+    if(isNaN(mark)||mark<0||mark>100) valid=false;
+    marksObj[sub]=mark;
+  });
+  if(!valid){
+    document.getElementById("message").innerHTML=`<div class="error">Invalid marks entered!</div>`; 
+    return; 
+  }
+
+  if(!student.marks[year]) student.marks[year]={};
+  student.marks[year][sem]=marksObj;
+
+  localStorage.setItem("studentsData", JSON.stringify(students));
+  document.getElementById("message").innerHTML=`<div class="success">Result updated for ${student.name} (Roll ${student.roll}) - Year ${year} Semester ${sem}</div>`;
+}
+</script>
+
+</body>
+</html>
